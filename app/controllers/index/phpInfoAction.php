@@ -1,0 +1,3 @@
+<?php
+
+headTitle('PHP-info');
