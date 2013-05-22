@@ -13,12 +13,14 @@ function initDb() {
     mysql_select_db($db['dbName']);
     mysql_query('SET NAMES ' . (($_values['encode']) ? $_values['encode'] : 'UTF-8'));
 }
-
 //initDb();
 
 function initHeadTitle() {
     headTitleDelimeter(' - ');
     headTitle('Framework');
 }
-
 initHeadTitle();
+
+function initAcl() {
+    setResponse('group', 'guest');
+}

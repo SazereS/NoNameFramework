@@ -8,5 +8,10 @@ return array(
     'ignoring_errors' => array(
         'Undefined index:',
         'Undefined variable:',
+    ),
+    'acl' =>array(
+        'active' => true,
+        'default_group' => 'user',
+        'deny_handler' => 'accessError'
     )
 );
