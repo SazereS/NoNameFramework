@@ -12,7 +12,6 @@ return array(
         'deny' => true
     ),
     'guest' => array(
-        'parent' => 'test',
         'access' => true,
         'deny' => array(
             'index' => array(
@@ -44,3 +43,21 @@ return array(
         'access' => true
     )
 );
+/*
+ *
+ * 'guest' => array(
+        'access' => array(
+            'forAdmins' => array(
+                'test'
+            ),
+            'notForAll'
+        ),
+        'deny' => array(
+            'index' => array(
+                'register'
+            ),
+            'forAdmins'
+        ),
+    ),
+ *
+ */

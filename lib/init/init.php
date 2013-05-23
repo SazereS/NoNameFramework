@@ -22,5 +22,5 @@ function initHeadTitle() {
 initHeadTitle();
 
 function initAcl() {
-    setResponse('group', 'guest');
+    setResponse('group', 'test');
 }
