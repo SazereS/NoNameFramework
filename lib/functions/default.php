@@ -400,7 +400,7 @@ function cutForPreview($text, $delimiter = '<cut />') {
  * @return string
  */
 function baseUrl($name) {
-    return str_replace('//', '/', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])) . '' . $name);
+    return str_replace('//', '/', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])) . '/' . $name);
 }
 
 /**
