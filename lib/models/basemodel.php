@@ -74,6 +74,17 @@ function fetchRow($table, $where = false, $sort = false) {
 }
 
 /**
+ * Ищет строку с значением id равным $id
+ *
+ * @param string $table
+ * @param integer $id
+ * @return array
+ */
+function findRow($table, $id) {
+    return fetchRow($table, '`id` = ' . intval($id));
+}
+
+/**
  * Вставляет данные в новую строку в таблице
  *
  * @param string $table
