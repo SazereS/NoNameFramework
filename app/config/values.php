@@ -8,5 +8,11 @@ return array(
     'ignoring_errors' => array(
         'Undefined index:',
         'Undefined variable:',
+    ),
+    'autoload' => array(
+
+    ),
+    'modules' => array(
+
     )
 );
