@@ -14,6 +14,7 @@ function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
         }
     }
     if (APP_DEBUG) {
+        debugTrace();
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 }
