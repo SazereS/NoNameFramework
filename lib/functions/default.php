@@ -409,6 +409,16 @@ function baseUrl($name) {
 }
 
 /**
+ * Генерирует URL для папки 'public'
+ *
+ * @param string $url
+ * @return string
+ */
+function publicUrl($url) {
+    return baseUrl('public/' . $url);
+}
+
+/**
  * Проверяет число на четность
  *
  * @param integer $n

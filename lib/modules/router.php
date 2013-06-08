@@ -59,6 +59,11 @@ if (isset($same_routes))
                                 $flag = false;
                                 break;
                             }
+                        } elseif($rv[0] == '^' AND $rv[strlen($rv) - 1] == '$'){
+                            $rv = '/' . $rv . '/';
+                            if (!preg_match($rv, $_url_array[$k + 1])) {
+                                $flag = false;
+                            }
                         } else {
                             switch ($rv) {
                                 case 'int':
