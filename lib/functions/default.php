@@ -69,6 +69,9 @@ function startAction() {
     silentTrace();
     $file = APP_PATH . 'controllers/' . $_response['controller'] . '/' . $_response['action'] . 'Action.php';
     if (!file_exists($file)) {
+       if(getValue('page404')){
+           redirect(getValue('page404'));
+       }
         debugTrace();
         die('<strong>Ошибка!</strong> Контроллер <b>"' . $_response['controller'] . '"</b> не существует, либо не имеет экшна  <b>"' .
                 $_response['action'] . '"</b>!');
