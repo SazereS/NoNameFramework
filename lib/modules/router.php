@@ -12,10 +12,10 @@ if (count($last_param) > 1) {
             in_array($last_param[count($last_param) - 1], getResponse('accepted_formats'))
     ) {
         setResponse('format', $last_param[count($last_param) - 1]);
+        unset($last_param[count($last_param) - 1]);
+        $_url_array[count($_url_array) - 1] = implode('.', $last_param);
+        unset($last_param);
     }
-    unset($last_param[count($last_param) - 1]);
-    $_url_array[count($_url_array) - 1] = implode('.', $last_param);
-    unset($last_param);
 }
 
 $routes       = (loadConfig('routes'));
