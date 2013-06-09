@@ -443,6 +443,7 @@ function isEven($n) {
  */
 function redirect($to = '') {
     header('Location: ' . baseUrl($to));
+    die();
 }
 
 /**
