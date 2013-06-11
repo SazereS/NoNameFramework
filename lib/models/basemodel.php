@@ -74,7 +74,7 @@ function fetchRow($table, $where = false, $sort = false) {
 }
 
 /**
- * Ищет строку с значением id равным $id
+ * Ищет строку по ключевому полю id
  *
  * @param string $table
  * @param integer $id
@@ -94,7 +94,7 @@ function findRow($table, $id) {
 function insertRow($table, $values = array()) {
     foreach ($values as $k => $v) {
         $cols[] = $k;
-        $vals[] = $v;
+        $vals[] = addcslashes($v, '\'');
     }
     return query('INSERT INTO `' . $table . '` (`' . implode('`, `', $cols) . '`) VALUES (\'' . implode('\',\'', $vals) . '\')');
 }
@@ -110,7 +110,7 @@ function insertRow($table, $values = array()) {
 function updateRow($table, $where = false, $values = array()) {
     $where = ($where) ? ' WHERE ' . $where : '';
     foreach ($values as $k => $v) {
-        $vals[] = '`' . $k . '`' . '=\'' . $v . '\'';
+        $vals[] = '`' . $k . '`' . '=\'' . addcslashes($v, '\'') . '\'';
     }
     return query('UPDATE ' . $table . ' SET ' . implode(', ', $vals) . $where);
 }
