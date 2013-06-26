@@ -94,7 +94,7 @@ function findRow($table, $id) {
 function insertRow($table, $values = array()) {
     foreach ($values as $k => $v) {
         $cols[] = $k;
-        $vals[] = addcslashes($v, '\'');
+        $vals[] = addcslashes($v, '\'\\');
     }
     return query('INSERT INTO `' . $table . '` (`' . implode('`, `', $cols) . '`) VALUES (\'' . implode('\',\'', $vals) . '\')');
 }
@@ -110,7 +110,7 @@ function insertRow($table, $values = array()) {
 function updateRow($table, $where = false, $values = array()) {
     $where = ($where) ? ' WHERE ' . $where : '';
     foreach ($values as $k => $v) {
-        $vals[] = '`' . $k . '`' . '=\'' . addcslashes($v, '\'') . '\'';
+        $vals[] = '`' . $k . '`' . '=\'' . addcslashes($v, '\'\\') . '\'';
     }
     return query('UPDATE ' . $table . ' SET ' . implode(', ', $vals) . $where);
 }
