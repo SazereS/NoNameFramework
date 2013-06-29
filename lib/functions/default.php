@@ -91,7 +91,12 @@ function startView($view) {
     global $_view;
     $file = APP_PATH . 'views/' . $view . '.phtml';
     if (file_exists($file)) {
+        extract($_view, EXTR_OVERWRITE);
+        ob_start();
         include($file);
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
     } else {
         debugTrace();
         die('<strong>Ошибка!</strong> Вью <strong>' . $file . '</strong> не существует!');
@@ -107,7 +112,7 @@ function startView($view) {
  */
 function startActionView($controller, $action) {
     $file = 'scripts/' . $controller . '/' . $action;
-    startView($file);
+    return startView($file);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -137,7 +142,7 @@ function loadFunction($foo) {
  * @return void
  */
 function loadCustomView($view) {
-    startView('custom/' . $view);
+    echo startView('custom/' . $view);
 }
 
 /**
@@ -339,7 +344,7 @@ function getValue($key){
  */
 function content() {
     global $_response;
-    startActionView($_response['controller'], $_response['action']);
+    return startActionView($_response['controller'], $_response['action']);
 }
 
 /**
