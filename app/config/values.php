@@ -6,6 +6,7 @@
 return array(
     'encode'          => 'UTF-8',
     'page404'         => false,
+    'allow_int_columns' => false,
     'ignoring_errors' => array(
         'Undefined index:',
         'Undefined variable:',
@@ -14,6 +15,6 @@ return array(
 
     ),
     'modules' => array(
-    //'mysql'
+        //'mysql'
     )
 );

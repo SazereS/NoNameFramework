@@ -9,6 +9,11 @@
 function resourceToArray($res) {
     if ($res)
         while ($e = fetch($res)) {
+            if(!getValue('allow_int_columns')){
+                foreach($e as $k=>$v){
+                    if(is_int($k)) unset($e[$k]);
+                }
+            }
             $r[] = $e;
         } else {
         $r = false;
@@ -26,26 +31,45 @@ function resourceToArray($res) {
  * @param string $where
  * @param string $sort
  * @param string $limit
+ * @param boolean $relations Использовать ли связанные таблицы
  * @return array
  */
-function fetchAll($table, $where = false, $sort = false, $limit = false) {
+function fetchAll($table, $where = false, $sort = false, $limit = false, $relations = true) {
     global $_require_again;
     global $_dont_cashing;
     global $_cash;
+    global $_relations;
     $where = ($where) ? ' WHERE ' . $where : '';
     $sort  = ($sort) ? ' ORDER BY ' . $sort : '';
     $limit = ($limit) ? ' LIMIT ' . $limit : '';
     $q     = 'SELECT * FROM `' . $table . '`' . $where . $sort . $limit;
-    $res   = query($q);
     if ($_require_again OR (empty($_cash['queries'][$q]))) {
         $_require_again = false;
-        return $_cash['queries'][$q] = resourceToArray($res);
+        $res   = query($q);
+        $res = $_cash['queries'][$q] = resourceToArray($res);
     } elseif ($_dont_cashing) {
         $_dont_cashing = false;
-        return resourceToArray($res);
+        $res   = query($q);
+        $res =  resourceToArray($res);
     } else {
-        return $_cash['queries'][$q];
+        $res =  $_cash['queries'][$q];
     }
+    if(!$res) return array();
+    if(isset($_relations[$table])){
+        foreach($_relations[$table] as $rel){
+            if($ct = $rel['has_many'] AND $relations){
+                foreach($res as $k=>$v){
+                    $res[$k][$ct] = fetchAll($ct, '`' . $rel['keys'][1] . '` = \'' . $res[$k][$rel['keys'][0]] . '\'');
+                }
+            } elseif($pt = $rel['belongs_to']){
+                foreach($res as $k=>$v){
+                    $res[$k][$rel['keys'][0]] = fetchRow($pt, '`' . $rel['keys'][1] . '` = \'' . $res[$k][$rel['keys'][0]] . '\'', false, false);
+                }
+            }
+        }
+    }
+
+    return $res;
 }
 
 /**
@@ -56,21 +80,12 @@ function fetchAll($table, $where = false, $sort = false, $limit = false) {
  * @param string $table
  * @param string $where
  * @param string $sort
+ * @param boolean $relations Использовать ли связанные таблицы
  * @return array
  */
-function fetchRow($table, $where = false, $sort = false) {
-    global $_require_again;
-    global $_cash;
-    $where = ($where) ? ' WHERE ' . $where : '';
-    $sort  = ($sort) ? ' ORDER BY ' . $sort : '';
-    $q     = 'SELECT * FROM `' . $table . '`' . $where . $sort . ' LIMIT 1';
-    $res   = query($q);
-    if ($_require_again OR (empty($_cash['queries'][$q]))) {
-        $_require_again       = false;
-        return $_cash['queries'][$q] = fetch($res);
-    } else {
-        return $_cash['queries'][$q];
-    }
+function fetchRow($table, $where = false, $sort = false, $relations = true) {
+    $r = fetchAll($table, $where, $sort, 1, $relations);
+    return $r[0];
 }
 
 /**

@@ -1,11 +1,10 @@
 <?php
 
 // В этом файле устанавливаются параметры для подключения
-// к MySQL базе сайта когда Debug-режим отключен, либо когда
-// файл app/config/debug/mysql.php отсутствует
+// к MySQL базе сайта когда Debug-режим включен
 return array(
     'dbHost' => 'localhost',
     'dbUser' => 'root',
     'dbPass' => '',
-    'dbName' => 'production',
+    'dbName' => 'test',
 );
