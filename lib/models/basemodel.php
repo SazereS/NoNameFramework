@@ -85,7 +85,11 @@ function fetchAll($table, $where = false, $sort = false, $limit = false, $relati
  */
 function fetchRow($table, $where = false, $sort = false, $relations = true) {
     $r = fetchAll($table, $where, $sort, 1, $relations);
-    return $r[0];
+    if($r){
+        return $r[0];
+    } else {
+        return false;
+    }
 }
 
 /**
