@@ -1,27 +1,9 @@
-<style>
-    body{
-        font-size: large;
-    }
-    p{
-        text-align: justify;
-    }
-    .center{
-        width: 800px;
-        margin:0 auto;
-    }
-    .footer{
-        font-size: medium;
-    }
-</style>
-<div class="center">
-    <center><img src="<?=publicUrl('img/logo.png') ?>" alt="NoName Framework" /></center>
-    <h1>Поздравляем! Ваш проект работает!</h1>
-    <p>Что бы начать работу с фреймворком поменяйте маршрут индексной страницы в файле <strong>app/config/routes.php</strong> или отредактируйте представление этого действия в файле <strong>app/views/script/index/index.phtml</strong>.</p>
-    <p>Для работы с базой данных отредактируйте конфиг <strong>app/config/mysql.php</strong> и раскомментируйте строку <b>'mysql'</b> в файле <strong>app/config/values.php</strong>.</p>
-    <p>Если вы хотите внести изменения в лайаут, отредактируйте файл <strong>app/views/layout/default.phtml</strong> или же создайте новый лайаут в папке <strong>app/views/layout</strong> и укажите его лайаутом по умолчанию в конфиге <strong>app/config/response.php</strong>.</p>
-    <p>Если вы хотите использовать разные конфиги для разработки и для использования на хостинге, скопируйте нужный конфиг в папку <strong>app/config/debug</strong> и проверьте, что на локальном сервере константа <strong>APP_DEBUG</strong> в файле <strong>index.php</strong> установлена в значение <strong>TRUE</strong>, а на хостинге - в значение <strong>FALSE</strong>. На данный момент Debug-режим <b><?=(APP_DEBUG) ? 'включен' : 'выключен' ?></b>.</p>
-    <p>PHP-info можно посмотреть тут: <a href="<?=baseUrl('index/php-info') ?>">index/php-info</a>.</p>
-    <p>Ответ индексной страницы в формате JSON можно увидеть здесь: <a href="<?=baseUrl('index/index.json') ?>">index/index.json</a>, а в формате XML - здесь: <a href="<?=baseUrl('index/index.xml') ?>">index/index.xml</a>.</p>
-    <hr />
-    <center class="footer">NoName Framework created by <b>SazereS</b> - 2013</center>
-</div>
+<h1>Поздравляем! Ваш проект работает!</h1>
+<p>Что бы начать работу с фреймворком поменяйте маршрут индексной страницы в файле <strong>app/config/routes.php</strong> или отредактируйте представление этого действия в файле <strong>app/views/script/index/index.phtml</strong>.</p>
+<p>Для работы с базой данных MySQL отредактируйте конфиг <strong>app/config/mysql.php</strong>, раскомментируйте строку <b>'mysql'</b> в файле <strong>app/config/values.php</strong> и закомментируйте строку <b>'sqlite'</b> там же.</p>
+<p>Если вы хотите посмотреть пример готового CRUD-контроллера, смотрите здесь: <a href="<?= baseUrl('texts') ?>">texts</a>.</p>
+<p>Если вы хотите внести изменения в лайаут, отредактируйте файл <strong>app/views/layout/default.phtml</strong> или же создайте новый лайаут в папке <strong>app/views/layout</strong> и укажите его лайаутом по умолчанию в конфиге <strong>app/config/response.php</strong>.</p>
+<p>Если вы хотите использовать разные конфиги для разработки и для использования на хостинге, скопируйте нужный конфиг в папку <strong>app/config/debug</strong> и проверьте, что на локальном сервере константа <strong>APP_DEBUG</strong> в файле <strong>index.php</strong> установлена в значение <strong>TRUE</strong>, а на хостинге - в значение <strong>FALSE</strong>. На данный момент Debug-режим <b><?= (APP_DEBUG)
+            ? 'включен' : 'выключен' ?></b>.</p>
+<p>PHP-info можно посмотреть тут: <a href="<?= baseUrl('index/php-info') ?>">index/php-info</a>.</p>
+<p>Ответ индексной страницы в формате JSON можно увидеть здесь: <a href="<?= baseUrl('index/index.json') ?>">index/index.json</a>, а в формате XML - здесь: <a href="<?= baseUrl('index/index.xml') ?>">index/index.xml</a>.</p>

@@ -1,0 +1,11 @@
+<h1>Texts controller - View action</h1>
+<h3>Text with id <?=$text['id'] ?>
+    <small>
+        <em>
+            (<a href="<?=baseUrl('text/' . $text['id'] . '/edit') ?>">Редактировать</a>
+            | <a href="<?=baseUrl('text/' . $text['id'] . '/delete') ?>">Удалить</a>)
+        </em>
+    </small>
+</h3>
+<p><?=$text['text'] ?></p>
+<p><a href="<?=baseUrl('texts') ?>">&larr; К списку текстов</a></p>

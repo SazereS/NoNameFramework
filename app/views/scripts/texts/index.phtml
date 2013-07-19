@@ -1,0 +1,6 @@
+<h1>Texts controller - Index action</h1>
+<p><a href="<?=baseUrl('texts/new') ?>">Добавить текст</a></p>
+
+<?php if($texts) foreach($texts as $text){ ?>
+<p><?=$text['id'] ?>: <a href="<?=baseUrl('text/' . $text['id']) ?>"><?=  cropArticle($text['text'], 5) ?></a></p>
+<?php } ?>

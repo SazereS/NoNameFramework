@@ -3,8 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <title><?=  headTitle() ?></title>
+        <style>
+            body{
+                font-size: large;
+            }
+            p{
+                text-align: justify;
+            }
+            .center{
+                width: 800px;
+                margin:0 auto;
+            }
+            .footer{
+                font-size: medium;
+            }
+        </style>
     </head>
     <body>
-<?php echo content() ?>
+        <div class="center">
+            <center><img src="<?= publicUrl('img/logo.png') ?>" alt="NoName Framework" /></center>
+            <?php echo content() ?>
+            <hr />
+            <center class="footer">NoName Framework created by <b>SazereS</b> - 2013</center>
+        </div>
     </body>
 </html>

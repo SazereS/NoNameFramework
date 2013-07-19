@@ -9,11 +9,6 @@
 function resourceToArray($res) {
     if ($res)
         while ($e = fetch($res)) {
-            if(!getValue('allow_int_columns')){
-                foreach($e as $k=>$v){
-                    if(is_int($k)) unset($e[$k]);
-                }
-            }
             $r[] = $e;
         } else {
         $r = false;
@@ -110,12 +105,16 @@ function findRow($table, $id) {
  * @param array $values
  * @return boolean
  */
-function insertRow($table, $values = array()) {
+function insertRow($table, $values = array(), $return_id = true) {
     foreach ($values as $k => $v) {
         $cols[] = $k;
         $vals[] = addcslashes($v, '\'\\');
     }
-    return query('INSERT INTO `' . $table . '` (`' . implode('`, `', $cols) . '`) VALUES (\'' . implode('\',\'', $vals) . '\')');
+    $qr = query('INSERT INTO `' . $table . '` (`' . implode('`, `', $cols) . '`) VALUES (\'' . implode('\',\'', $vals) . '\')');
+    if($return_id){
+        $qr = lastAutoincrement();
+    }
+    return $qr;
 }
 
 /**

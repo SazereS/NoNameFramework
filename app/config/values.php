@@ -16,5 +16,6 @@ return array(
     ),
     'modules' => array(
         //'mysql'
+        'sqlite'
     )
 );

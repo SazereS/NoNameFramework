@@ -1,0 +1,12 @@
+<h1>Texts controller - <?=$action ?> action</h1>
+<h3>Text with id <?=$text['id'] ?></h3>
+<form method="POST" action="">
+    <p>
+        <b>Text:</b><br />
+        <textarea rows="10" style="width: 100%" name="text" placeholder="Text"><?=$text['text'] ?></textarea>
+    </p>
+    <p>
+        <button type="submit">Сохранить</button>
+        <a href="<?=baseUrl('text/' . $text['id']) ?>">Отмена</a>
+    </p>
+</form>

@@ -17,13 +17,23 @@ function debugTrace() {
     $trc = debug_backtrace();
     unset($trc[0]);
     foreach ($trc as $key => $value) {
+        if($value['args'])
+            foreach($value['args'] as $a){
+                $args[] = print_r($a, true);
+            }
+        else
+            $args = array();
         printf(
                 //'<br />' .
                 '(' . $key . ') ' .
                 'Файл: <b>%s</b>,' . "<br />&nbsp;&nbsp;&nbsp;&nbsp;" .
                 'строка: <b>%s</b>,' . "<br />&nbsp;&nbsp;&nbsp;&nbsp;" .
                 'метод: <b>%s</b>,' . "<br />&nbsp;&nbsp;&nbsp;&nbsp;" .
-                'аргументы метода: <b>(%s)</b>.<br />', $value['file'], $value['line'], $value['function'], implode($value['args'], ', ')
+                'аргументы метода: <b>(%s)</b>.<br />',
+                $value['file'],
+                $value['line'],
+                $value['function'],
+                implode($args, ', ')
         );
     }
     echo '<pre>';
@@ -348,53 +358,6 @@ function content() {
 }
 
 /**
- * Алиас mysql_query()
- *
- * @param string $q
- * @return query_result
- */
-function query($q) {
-    global $_db;
-    $result = mysql_query($q, $_db);
-    if (!mysql_errno()) {
-        return $result;
-    } else {
-        debugTrace();
-        die('<strong>Ошибка MySQL!</strong> ' . mysql_error());
-    }
-}
-
-/**
- * Алиас mysql_fetch_array()
- *
- * @param query_result $q
- * @return array
- */
-function fetch($q) {
-    try {
-        return mysql_fetch_array($q);
-    } catch (ErrorException $e) {
-        debugTrace();
-        die('<strong>Ошибка MySQL!</strong>' . mysql_error());
-    }
-}
-
-/**
- * Алиас mysql_num_rows()
- *
- * @param query_result $q
- * @return integer
- */
-function num($q) {
-    try {
-        return mysql_num_rows($q);
-    } catch (ErrorException $e) {
-        debugTrace();
-        die('<strong>Ошибка MySQL!</strong>' . mysql_error());
-    }
-}
-
-/**
  * Обрезает текст до разделителя (по умолчанию "<cut />")
  *
  * @param string $text
@@ -413,6 +376,7 @@ function cutForPreview($text, $delimiter = '<cut />') {
  * @return string
  */
 function baseUrl($name) {
+    if($name == '#') return '#';
     return str_replace('//', '/', str_replace('\\', '/', dirname($_SERVER['PHP_SELF'])) . '/' . $name);
 }
 
