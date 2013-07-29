@@ -535,7 +535,7 @@ function json_fix_cyr($var) {
             $var->$m = json_fix_cyr($v);
         }
     } elseif (is_string($var)) {
-        $var = iconv(($_values['encode'] == 'utf8') ? 'utf-8' : $_values['encode'], 'utf-8', $var);
+        $var = iconv((strtolower($_values['encode']) == 'utf8') ? 'utf-8' : $_values['encode'], 'utf-8', $var);
     }
     return $var;
 }
