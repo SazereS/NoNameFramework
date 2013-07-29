@@ -1,5 +1,7 @@
 <?php
 
+sessionStart();
+
 // Обработчик ошибок
 function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
     global $_values;
@@ -18,5 +20,7 @@ function handleError($errno, $errstr, $errfile, $errline, array $errcontext) {
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 }
-
 set_error_handler('handleError');
+
+date_default_timezone_set(getValue('default_timezone'));
+setlocale(LC_ALL, getValue('default_locale'));

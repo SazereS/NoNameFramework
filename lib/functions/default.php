@@ -79,7 +79,7 @@ function startAction() {
     silentTrace();
     $file = APP_PATH . 'controllers/' . $_response['controller'] . '/' . $_response['action'] . 'Action.php';
     if (!file_exists($file)) {
-       if(getValue('page404')){
+       if(getValue('page404') AND !APP_DEBUG){
            redirect(getValue('page404'));
        }
         debugTrace();
@@ -169,7 +169,7 @@ function loadLayout($layout = 'default') {
         case 'json':
             header('Content-Type: application/json');
             startAction();
-            print(json_encode(json_fix_cyr($_response['result']), JSON_PRETTY_PRINT));
+            print(json_encode(json_fix_cyr($_response['result']), (APP_DEBUG) ? JSON_PRETTY_PRINT : NULL));
             break;
         case 'xml':
             header('Content-Type: application/xml; charset=' . $_values['encode']);
@@ -358,6 +358,15 @@ function content() {
 }
 
 /**
+ * Алиас session_start()
+ *
+ * @return void
+ */
+function sessionStart() {
+    session_start();
+}
+
+/**
  * Обрезает текст до разделителя (по умолчанию "<cut />")
  *
  * @param string $text
@@ -526,7 +535,7 @@ function json_fix_cyr($var) {
             $var->$m = json_fix_cyr($v);
         }
     } elseif (is_string($var)) {
-        $var = iconv($_values['encode'], 'utf-8', $var);
+        $var = iconv(($_values['encode'] == 'utf8') ? 'utf-8' : $_values['encode'], 'utf-8', $var);
     }
     return $var;
 }

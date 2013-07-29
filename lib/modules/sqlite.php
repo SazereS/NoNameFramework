@@ -20,7 +20,7 @@ function query($q) {
 /**
  * Алиас sqlite_fetch_array()
  *
- * @param query_result $q
+ * @param SQLite3Result $q
  * @return array
  */
 function fetch(SQLite3Result $q) {
@@ -34,9 +34,9 @@ function fetch(SQLite3Result $q) {
 }
 
 /**
- * Алиас mysqli_num_rows()
+ * Алиас sqlite_num_rows()
  *
- * @param query_result $q
+ * @param SQLite3Result $q
  * @return integer
  */
 function num(SQLite3Result $q) {

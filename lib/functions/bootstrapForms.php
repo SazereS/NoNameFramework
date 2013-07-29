@@ -52,7 +52,36 @@ DECORATOR
 
 function bootstrapFormCreateInput($type, $name, Array $params = array(), Array $errors = array(), $form_type = 'form-horizontal'){
     $decorators = bootstrapFormDecorators($form_type);
-    switch($type){
+    switch(strtolower($type)){
+        # FILE
+       case 'file':
+            $input_params = array(
+                'type' => $type,
+                'name' => $name,
+                'id' => 'input-' . $name
+            );
+            $input_params = array_merge($params, $input_params);
+            if(!empty($errors)){
+                $errors_string = '<ul><li class="text-error">' . implode('</li><li class="text-error">', $errors) . '</li></ul>';
+                $error_class = ' error';
+            }
+            if($params['class']) $input_params['class'] = array_merge($params['class'], $input_params['class']);
+            if($input_params['class']) $input_params['class'] = implode(' ', $input_params['class']);
+            foreach($input_params as $param => $value){
+                $params_strings[] = $param . '="' . $value . '"';
+            }
+            $input = sprintf('<input %s />', implode(' ', $params_strings));
+            $result = sprintf($decorators['text'], $error_class, $name, $params['label'], $input, $errors_string);
+        break;
+
+        # DIVIDER
+        case 'divider':
+            if($params['label']){
+                $result = '<legend id="divider-' . $name . '"><small>' . $params['label'] . '</small></legend>';
+            } else {
+                $result = '<hr id="divider-' . $name . '" />';
+            }
+        break;
         # LINK
         case 'link':
             $input_params = array(
@@ -136,21 +165,40 @@ function bootstrapFormCreateInput($type, $name, Array $params = array(), Array $
             } else {
                 return false;
             }
-            foreach($input_params as $param => $value){
-                $params_strings[] = $param . '="' . $value . '"';
-            }
-            foreach($values as $rdv => $rdl){
-                $input .= sprintf(
+            if($input_params['keys']){
+                $k = $input_params['keys']['key'];
+                $v = $input_params['keys']['value'];
+                unset($input_params['keys']);
+                foreach($values as $option){
+                    $input .= sprintf(
                         '<option %s>%s</option>',
                         implode(
-                                ' ',
-                                array_merge(
-                                        array('value="' . $rdv . '"'),
-                                        ($rdv == $rvalue) ? array('selected="selected"') : array()
-                                )
+                            ' ',
+                            array_merge(
+                                    array('value="' . $option[$k] . '"'),
+                                    ($option[$k] == $rvalue) ? array('selected="selected"') : array()
+                            )
                         ),
-                        $rdl
-                );
+                        $option[$v]
+                    );
+                }
+            } else {
+                foreach($values as $rdv => $rdl){
+                    $input .= sprintf(
+                            '<option %s>%s</option>',
+                            implode(
+                                    ' ',
+                                    array_merge(
+                                            array('value="' . $rdv . '"'),
+                                            ($rdv == $rvalue) ? array('selected="selected"') : array()
+                                    )
+                            ),
+                            $rdl
+                    );
+                }
+            }
+            foreach($input_params as $param => $value){
+                $params_strings[] = $param . '="' . $value . '"';
             }
             $input = sprintf('<select %s >%s</select>', implode(' ', $params_strings), $input);
             $result = sprintf($decorators['text'], $error_class, $name, $label, $input, $errors_string);
@@ -241,12 +289,12 @@ function bootstrapFormCreateInput($type, $name, Array $params = array(), Array $
             }
             if($params['class']) $input_params['class'] = array_merge($params['class'], $input_params['class']);
             if($input_params['class']) $input_params['class'] = implode(' ', $input_params['class']);
-            foreach($input_params as $param => $value){
-                $params_strings[] = $param . '="' . $value . '"';
-            }
             if($input_params['value']){
                 $text = $input_params['value'];
                 unset($input_params['value']);
+            }
+            foreach($input_params as $param => $value){
+                $params_strings[] = $param . '="' . $value . '"';
             }
             $input = sprintf('<textarea %s>%s</textarea>', implode(' ', $params_strings), $text);
             $result = sprintf($decorators['text'], $error_class, $name, $params['label'], $input, $errors_string);

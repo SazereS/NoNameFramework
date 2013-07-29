@@ -7,4 +7,5 @@ return array(
     'dbUser' => 'root',
     'dbPass' => '',
     'dbName' => 'test',
+    'time_zone' => '+04:00'
 );

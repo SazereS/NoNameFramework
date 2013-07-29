@@ -4,9 +4,11 @@
 // для данного сайта
 
 return array(
-    'encode'          => 'UTF-8',
+    'default_language' => 'et',    // For translater
+    'default_locale'   => 'en_US', // For system values, like names of days, etc...
+    'default_timezone' => 'Europe/Moscow',
+    'encode'          => 'UTF8',
     'page404'         => false,
-    'allow_int_columns' => false,
     'ignoring_errors' => array(
         'Undefined index:',
         'Undefined variable:',

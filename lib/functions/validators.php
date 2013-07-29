@@ -6,13 +6,14 @@ function validatorsGetRegEx($key = FALSE){
     $reg_ex = array(
         'int' => '/^[0-9]+$/',
         'float' => '/^[0-9]+(,|\.)?[0-9]*$/',
-        'phone' => '/\+?[0-9]{0,4} ?\(?([0-9]{3})\)?([ .-]?)([- 0-9]{2,15})/',
+        'phone' => '/^\+?[0-9]{0,4} ?\(?([0-9]{3})\)?([ .-]?)([- 0-9]{2,15})$/',
         'login' => '/^[-_a-zA-Z0-9]+$/',
         'alpha' => '/^[a-zA-Z0-9]+$/',
         'url' => '|^https?://([\w-]+\.)+[\w]{2,4}(:[0-9]{1,5})?(/[\w-._%]+)*(\?.*)?(#[\w-.]*)?/?$|iu',
         'email' => '|^[\w-.]+@([\w-]+\.)+[\w]{2,4}$|iu',
         'ipv4' => '/^(\d{1,2}|1[0-9]{2}|2[0-4]{1}[0-9]{1}|25[0-5]{1}){1}(\.(\d{1,2}|1[0-9]{2}|2[0-4]{1}[0-9]{1}|25[0-5]{1})){3}$/',
-        'slug' => '/^[\w ]+$/u'
+        'slug' => '/^[\w ]+$/u',
+        'text' => '/^[\w ,\.!\?():;&-]+$/u'
     );
 
     if($key){
@@ -54,6 +55,9 @@ function validateIpv4($data){
 }
 function validateSlug($data){
     return validateRegEx($data, validatorsGetRegEx('slug'));
+}
+function validateText($data){
+    return validateRegEx($data, validatorsGetRegEx('text'));
 }
 function validateNotEmpty($data){
     return !empty($data);

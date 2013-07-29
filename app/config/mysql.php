@@ -8,4 +8,5 @@ return array(
     'dbUser' => 'root',
     'dbPass' => '',
     'dbName' => 'production',
+    'time_zone' => '+04:00'
 );

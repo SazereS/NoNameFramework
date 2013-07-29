@@ -2,9 +2,8 @@
 
 global $_translates;
 $_translates = array(
-    'default_language' => 'en',
     'accepted_languages' => array(),
-    'lang' => $_SESSION['lang']
+    'lang' => ($_COOKIE['lang']) ? $_COOKIE['lang'] : $_SESSION['lang']
 );
 
 
@@ -21,10 +20,10 @@ function translatorSetLanguage($lang){
     if(in_array($lang, $_translates['accepted_languages'])){
         $_translates['lang'] = $lang;
         $_SESSION['lang'] = $lang;
+        setCookie('lang', $lang, time() + (3600 * 24 * 30), baseUrl(''));
         return true;
     } else {
-        $_translates['lang'] = $_translates['default_language'];
-        $_SESSION['lang'] = $_translates['default_language'];
+        $_translates['lang'] = $_SESSION['lang'] = getValue('default_language');
         return false;
     }
 }
@@ -52,15 +51,10 @@ function translatorSetAcceptedLanguages(Array $langs){
     $_translates['accepted_languages'] = $langs;
 }
 
-function translatorSetDefaultLanguages($lang){
-    global $_translates;
-    $_translates['default_language'] = $lang;
-}
-
 function translatorStart(){
     global $_translates;
     if(!translatorGetLanguage()){
-        translatorSetLanguage($_translates['default_language']);
+        translatorSetLanguage(getValue('default_language'));
     }
     if($_translates['source'] == 'db'){
         $res = query('SELECT `key`,`' . $_translates['lang'] . '` FROM ' . $_translates['table']);

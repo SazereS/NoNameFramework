@@ -155,9 +155,16 @@ function deleteRow($table, $where = false) {
  * @return integer
  */
 function countRows($table, $where = false, $sort = false, $limit = false) {
+    global $_cash;
     $where = ($where) ? ' WHERE ' . $where : '';
     $sort  = ($sort) ? ' ORDER BY ' . $sort : '';
     $limit = ($limit) ? ' LIMIT ' . $limit : '';
     $q     = 'SELECT * FROM `' . $table . '`' . $where . $sort . $limit;
-    return num(query($q));
+    if($_cash['queries'][$q]){
+        return count($_cash['queries'][$q]);
+    } else {
+        $q = 'SELECT COUNT(*) FROM `' . $table . '`' . $where . $sort . $limit;
+        $result = fetch(query($q));
+        return reset($result);
+    }
 }

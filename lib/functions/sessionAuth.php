@@ -7,14 +7,6 @@
 global $_sessionAuth;
 
 /**
- * Алиас session_start()
- *
- */
-function sessionStart() {
-    session_start();
-}
-
-/**
  * Пытается авторизовать пользователя, используя
  * новые данные
  *
@@ -43,7 +35,6 @@ function sessionSetAuth($id, $pass) {
  *
  */
 function sessionAuth() {
-    sessionStart();
     if (!checkAuth()) {
         return false;
     }

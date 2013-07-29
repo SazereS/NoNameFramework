@@ -49,11 +49,15 @@ function num($q) {
     }
 }
 
+/**
+ * Алиас mysqli_insert_id()
+ *
+ * @return integer
+ */
 function lastAutoincrement(){
         global $_db;
         return mysqli_insert_id($_db);
 }
-
 
 $db  = loadConfig('mysql');
 global $_db;
@@ -64,5 +68,6 @@ $_db = mysqli_connect(
 
 mysqli_select_db($_db, $db['dbName']);
 query('SET NAMES ' . ((getValue('encode')) ? getValue('encode') : 'utf8'));
+query('SET time_zone = \'' . $db['time_zone'] . '\'');
 
 unset($db);
